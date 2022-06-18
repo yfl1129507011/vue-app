@@ -1,8 +1,9 @@
 <template>
   <div>
     <Header/>
+    <!-- 路由组件显示标记 -->
     <router-view></router-view>
-    <Footer/>
+    <Footer v-show="$route.meta.show"></Footer>
   </div>
 </template>
 
