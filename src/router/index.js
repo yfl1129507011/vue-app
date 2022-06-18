@@ -23,10 +23,25 @@ export default new VueRouter({
             }
         },
         {
-            path: "/search",
+            name: "search",
+            path: "/search/:keyword",
             component: Search,
             meta: {
                 show: true
+            },
+            // 1. 布尔值写法-params   props: ['keyword']
+            // props: true
+            // 对象写法：额外传递参数
+            /* props: {
+                a: 1,
+                b: 2
+            } */
+            // 函数写法
+            props: ($route)=>{
+                return {
+                    keyword: $route.params.keyword,
+                    k: $route.query.k
+                }
             }
         },
         {
