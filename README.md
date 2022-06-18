@@ -49,3 +49,8 @@
         "lint": "vue-cli-service lint"
     },
     ```
+
+
+## 项目需要安装的模块
+- less安装：```npm i less less-loader@5```
+- vue路由安装：```npm i vue-router@3```
