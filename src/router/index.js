@@ -11,6 +11,26 @@ import Search from '@/pages/Search'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 
+// 重写路由原型对象方法 push | replace
+let originPush = VueRouter.prototype.push
+let originReplace = VueRouter.prototype.replace
+
+VueRouter.prototype.push = function(location, resolve, reject) {
+    if (resolve && reject) {
+        originPush.call(this, location, resolve, reject)
+    } else {
+        originPush.call(this, location, () => {}, () => {} )
+    }
+}
+
+VueRouter.prototype.replace = function(location, resolve, reject) {
+    if (resolve && reject) {
+        originReplace.call(this, location, resolve, reject)
+    } else {
+        originReplace.call(this, location, () => {}, () => {} )
+    }
+}
+
 // 配置路由
 export default new VueRouter({
     routes: [
