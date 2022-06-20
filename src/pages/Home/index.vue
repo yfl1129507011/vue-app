@@ -1,10 +1,12 @@
 <template>
-  <h3>首页组件</h3>
+  <div>
+    <TypeNav/>
+  </div>
 </template>
 
 <script>
 export default {
-
+    name: 'Home'
 }
 </script>
 
