@@ -22,4 +22,4 @@ requests.interceptors.response.use((res)=>{
     return Promise.reject(new Error('faile'))
 })
 
-export default axios
+export default requests
