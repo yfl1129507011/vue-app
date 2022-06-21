@@ -57,7 +57,7 @@ export default {
             this.$router.push({
                 name: "search",
                 params: {
-                    keyword: this.keyword
+                    keyword: this.keyword || undefined
                 },
                 query: {
                     k: this.keyword.toUpperCase()

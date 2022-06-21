@@ -5,21 +5,26 @@
             <div @mouseleave="clearInx">
                 <h2 class="all">全部商品分类</h2>
                 <div class="sort">
-                    <div class="all-sort-list2">
+                    <div class="all-sort-list2" @click="goSearch">
                         <div :class="{ cur: curInx == inx }" class="item" v-for="(c1, inx) in categoryList"
                             :key="c1.categoryId">
                             <h3 @mouseenter="changeInx(inx)">
-                                <a href="">{{ c1.categoryName }}</a>
+                                <a :data-catId1="c1.categoryId" :data-categoryName="c1.categoryName">{{ c1.categoryName
+                                }}</a>
                             </h3>
-                            <div class="item-list clearfix" :style="{display: curInx==inx?'block':'none'}">
+                            <div class="item-list clearfix" :style="{ display: curInx == inx ? 'block' : 'none' }">
                                 <div class="subitem" v-for="c2 in c1.categoryChild" :key="c2.categoryId">
                                     <dl class="fore">
                                         <dt>
-                                            <a href="">{{ c2.categoryName }}</a>
+                                            <a :data-catId2="c2.categoryId" :data-categoryName="c2.categoryName">{{
+                                                    c2.categoryName
+                                            }}</a>
                                         </dt>
                                         <dd>
                                             <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
-                                                <a href="">{{ c3.categoryName }}</a>
+                                                <a :data-catId3="c3.categoryId" :data-categoryName="c3.categoryName">{{
+                                                        c3.categoryName
+                                                }}</a>
                                             </em>
                                         </dd>
                                     </dl>
@@ -66,11 +71,34 @@ export default {
     },
     methods: {
         // 使用函数节流，减少触发函数请求，throttle不能使用箭头函数
-        changeInx: throttle(function(inx){
+        changeInx: throttle(function (inx) {
             this.curInx = inx
         }, 100),
         clearInx() {
             this.curInx = -1
+        },
+        goSearch(event) {
+            let element = event.target
+            let { categoryname, catid1, catid2, catid3 } = element.dataset
+            // console.log(element.dataset)
+            if (categoryname) {
+                let location = {
+                    name: 'search'
+                }
+                let query = { categoryName: categoryname }
+
+                if (catid1) { // 一级分类
+                    query.catId1 = catid1
+                } else if (catid2) { // 二级分类
+                    query.catId2 = catid2
+                } else {
+                    query.catId3 = catid3
+                }
+
+                location.query = query
+                console.log(location)
+                this.$router.push(location)
+            }
         }
     }
 }
