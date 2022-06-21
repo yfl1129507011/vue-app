@@ -45,6 +45,9 @@
 
 <script>
 import { mapState } from 'vuex'
+// 引入节流函数
+import throttle from 'lodash/throttle'
+
 export default {
     name: "TypeNav",
     data() {
@@ -62,9 +65,10 @@ export default {
         })
     },
     methods: {
-        changeInx(inx) {
+        // 使用函数节流，减少触发函数请求，throttle不能使用箭头函数
+        changeInx: throttle(function(inx){
             this.curInx = inx
-        },
+        }, 100),
         clearInx() {
             this.curInx = -1
         }
