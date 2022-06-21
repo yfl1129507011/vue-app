@@ -11,7 +11,7 @@
                             <h3 @mouseenter="changeInx(inx)">
                                 <a href="">{{ c1.categoryName }}</a>
                             </h3>
-                            <div class="item-list clearfix">
+                            <div class="item-list clearfix" :style="{display: curInx==inx?'block':'none'}">
                                 <div class="subitem" v-for="c2 in c1.categoryChild" :key="c2.categoryId">
                                     <dl class="fore">
                                         <dt>
@@ -182,11 +182,11 @@ export default {
                         }
                     }
 
-                    &:hover {
+                    /* &:hover {
                         .item-list {
                             display: block;
                         }
-                    }
+                    } */
                 }
 
                 /* .item:hover {
