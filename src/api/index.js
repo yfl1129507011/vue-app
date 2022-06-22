@@ -10,3 +10,4 @@ export const reqCategoryList = ()=>requests({
 
 // 获取banner轮播图模拟数据
 export const reqGetBannerList = ()=>mockRequests.get('/banner')
+export const reqFloorList = ()=>mockRequests.get('/floor')

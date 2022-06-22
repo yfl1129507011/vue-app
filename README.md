@@ -150,3 +150,36 @@
 
 ## Swiper 图片轮播
 > 安装：npm i swiper@5
+```js
+watch: {
+    bannerList: {
+        handler(newVal, oldVal) {
+            this.$nextTick(()=>{
+                new Swiper('#mySwiper', {
+                    loop: true, // 循环模式选项
+
+                    // 如果需要分页器
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true
+                    },
+
+                    // 如果需要前进后退按钮
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    }
+                })
+            })
+        }
+    }
+}
+```
+
+## 组件之间的通信方式
+1. props: 用于父给子组件进行通信
+2. 自定义事件： @on @emit 可以实现子给父组件通信
+3. 全局事件总线：$bus  全部组件都能通信
+4. pubsub-js：消息订阅  全部组件都能通信
+5. 插槽
+6. vuex

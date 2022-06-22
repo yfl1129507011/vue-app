@@ -1,10 +1,11 @@
-import { reqCategoryList, reqGetBannerList } from "@/api"
+import { reqCategoryList, reqGetBannerList, reqFloorList } from "@/api"
 
 // vuex模块式编程，home模块数据仓库
 
 const state = { // 仓库存取数据的地方
     categoryList: [],
-    bannerList: []
+    bannerList: [],
+    floorList: []
 }
 
 const mutations = { // 修改state的唯一手段
@@ -13,21 +14,31 @@ const mutations = { // 修改state的唯一手段
     },
     BANNER_LIST(state, bannerList) {
         state.bannerList = bannerList
+    },
+    FLOOR_LIST(state, floorList) {
+        state.floorList = floorList
     }
 }
 
 const actions = { // 可以写自己的业务逻辑，也可以处理异步
-    async categoryList({commit}) {
+    async categoryList({ commit }) {
         let result = await reqCategoryList()
         if (result.code == 200) {
             commit("CATGORY_LIST", result.data)
         }
     },
 
-    async getBannerList({commit}) {
+    async getBannerList({ commit }) {
         let result = await reqGetBannerList()
         if (result.code == 200) {
             commit("BANNER_LIST", result.data)
+        }
+    },
+
+    async getFloorList({ commit }) {
+        let result = await reqFloorList()
+        if (result.code == 200) {
+            commit("FLOOR_LIST", result.data)
         }
     }
 }
