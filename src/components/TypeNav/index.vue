@@ -2,37 +2,42 @@
     <!-- 商品分类导航 -->
     <div class="type-nav">
         <div class="container">
-            <div @mouseleave="clearInx">
+            <div @mouseleave="clearInx" @mouseenter="enterShow">
                 <h2 class="all">全部商品分类</h2>
-                <div class="sort">
-                    <div class="all-sort-list2" @click="goSearch">
-                        <div :class="{ cur: curInx == inx }" class="item" v-for="(c1, inx) in categoryList"
-                            :key="c1.categoryId">
-                            <h3 @mouseenter="changeInx(inx)">
-                                <a :data-catId1="c1.categoryId" :data-categoryName="c1.categoryName">{{ c1.categoryName
-                                }}</a>
-                            </h3>
-                            <div class="item-list clearfix" :style="{ display: curInx == inx ? 'block' : 'none' }">
-                                <div class="subitem" v-for="c2 in c1.categoryChild" :key="c2.categoryId">
-                                    <dl class="fore">
-                                        <dt>
-                                            <a :data-catId2="c2.categoryId" :data-categoryName="c2.categoryName">{{
-                                                    c2.categoryName
-                                            }}</a>
-                                        </dt>
-                                        <dd>
-                                            <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
-                                                <a :data-catId3="c3.categoryId" :data-categoryName="c3.categoryName">{{
-                                                        c3.categoryName
+                <!-- 过度动画效果 -->
+                <transition name="sort">
+                    <div class="sort" v-show="show">
+                        <div class="all-sort-list2" @click="goSearch">
+                            <div :class="{ cur: curInx == inx }" class="item" v-for="(c1, inx) in categoryList"
+                                :key="c1.categoryId">
+                                <h3 @mouseenter="changeInx(inx)">
+                                    <a :data-catId1="c1.categoryId" :data-categoryName="c1.categoryName">{{
+                                            c1.categoryName
+                                    }}</a>
+                                </h3>
+                                <div class="item-list clearfix" :style="{ display: curInx == inx ? 'block' : 'none' }">
+                                    <div class="subitem" v-for="c2 in c1.categoryChild" :key="c2.categoryId">
+                                        <dl class="fore">
+                                            <dt>
+                                                <a :data-catId2="c2.categoryId" :data-categoryName="c2.categoryName">{{
+                                                        c2.categoryName
                                                 }}</a>
-                                            </em>
-                                        </dd>
-                                    </dl>
+                                            </dt>
+                                            <dd>
+                                                <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
+                                                    <a :data-catId3="c3.categoryId"
+                                                        :data-categoryName="c3.categoryName">{{
+                                                                c3.categoryName
+                                                        }}</a>
+                                                </em>
+                                            </dd>
+                                        </dl>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </transition>
             </div>
             <nav class="nav">
                 <a href="###">服装城</a>
@@ -57,11 +62,15 @@ export default {
     name: "TypeNav",
     data() {
         return {
-            curInx: -1
+            curInx: -1,
+            show: true
         }
     },
     mounted() {
         this.$store.dispatch('categoryList')
+        if (this.$route.path != '/home') {
+            this.show = false
+        }
     },
     computed: {
         ...mapState({
@@ -76,6 +85,9 @@ export default {
         }, 100),
         clearInx() {
             this.curInx = -1
+            if (this.$route.path != '/home') {
+                this.show = false
+            }
         },
         goSearch(event) {
             let element = event.target
@@ -99,6 +111,9 @@ export default {
                 console.log(location)
                 this.$router.push(location)
             }
+        },
+        enterShow() {
+            this.show = true
         }
     }
 }
@@ -229,6 +244,19 @@ export default {
                     background: skyblue;
                 }
             }
+        }
+
+        // 过度动画样式
+        .sort-enter {
+            height: 0px;
+        }
+
+        .sort-enter-to {
+            height: 461px;
+        }
+
+        .sort-enter-active {
+            transition: all linear .5s;
         }
     }
 }
