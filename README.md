@@ -147,3 +147,6 @@
 3. 把mock数据需要的图片放置到public文件夹中（public文件夹在打包的时候，会把相应的资源原封不动打包到dist文件夹中）
 4. 创建mockServe.js文件通过mockjs插件实现模拟数据
 5. 需要在main.js入口文件中进行引入```import '@/mock/mockServe'```
+
+## Swiper 图片轮播
+> 安装：npm i swiper@5

@@ -6,18 +6,9 @@
                 <!--banner轮播-->
                 <div class="swiper-container" id="mySwiper">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <img src="./images/banner1.jpg" />
+                        <div class="swiper-slide" v-for="(carousel, index) in bannerList" :key="index">
+                            <img :src="carousel.imgUrl" />
                         </div>
-                        <!-- <div class="swiper-slide">
-                            <img src="./images/banner2.jpg" />
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="./images/banner3.jpg" />
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="./images/banner4.jpg" />
-                        </div> -->
                     </div>
                     <!-- 如果需要分页器 -->
                     <div class="swiper-pagination"></div>
@@ -112,6 +103,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import Swiper from 'swiper'
 
 export default {
     name: "ListContainer",
@@ -120,8 +112,31 @@ export default {
     },
     computed: {
         ...mapState({
-            bannerList: state=>state.home.bannerList
+            bannerList: state => state.home.bannerList
         })
+    },
+    watch: {
+        bannerList: {
+            handler(newVal, oldVal) {
+                this.$nextTick(()=>{
+                    new Swiper('#mySwiper', {
+                        loop: true, // 循环模式选项
+    
+                        // 如果需要分页器
+                        pagination: {
+                            el: '.swiper-pagination',
+                            clickable: true
+                        },
+    
+                        // 如果需要前进后退按钮
+                        navigation: {
+                            nextEl: '.swiper-button-next',
+                            prevEl: '.swiper-button-prev',
+                        }
+                    })
+                })
+            }
+        }
     }
 }
 </script>
