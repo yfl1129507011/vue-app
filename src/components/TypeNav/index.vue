@@ -67,7 +67,6 @@ export default {
         }
     },
     mounted() {
-        this.$store.dispatch('categoryList')
         if (this.$route.path != '/home') {
             this.show = false
         }
@@ -108,6 +107,9 @@ export default {
                 }
 
                 location.query = query
+                if (this.$route.params) {
+                    location.params = this.$route.params
+                }
                 console.log(location)
                 this.$router.push(location)
             }
