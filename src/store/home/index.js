@@ -1,14 +1,18 @@
-import { reqCategoryList } from "@/api"
+import { reqCategoryList, reqGetBannerList } from "@/api"
 
 // vuex模块式编程，home模块数据仓库
 
 const state = { // 仓库存取数据的地方
-    categoryList: []
+    categoryList: [],
+    bannerList: []
 }
 
 const mutations = { // 修改state的唯一手段
     CATGORY_LIST(state, categoryList) {
         state.categoryList = categoryList
+    },
+    BANNER_LIST(state, bannerList) {
+        state.bannerList = bannerList
     }
 }
 
@@ -17,6 +21,13 @@ const actions = { // 可以写自己的业务逻辑，也可以处理异步
         let result = await reqCategoryList()
         if (result.code == 200) {
             commit("CATGORY_LIST", result.data)
+        }
+    },
+
+    async getBannerList({commit}) {
+        let result = await reqGetBannerList()
+        if (result.code == 200) {
+            commit("BANNER_LIST", result.data)
         }
     }
 }

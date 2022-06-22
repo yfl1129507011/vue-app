@@ -12,6 +12,9 @@ import router from '@/router'
 // 引入vuex
 import store from '@/store'
 
+// 引入mock模块进行数据模拟
+import '@/mock/mockServe'
+
 
 Vue.config.productionTip = false
 
