@@ -11,15 +11,20 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
-            <li class="with-x">手机</li>
-            <li class="with-x">iphone<i>×</i></li>
-            <li class="with-x">华为<i>×</i></li>
-            <li class="with-x">OPPO<i>×</i></li>
+            <li class="with-x" v-if="searchParams.categoryName">
+            {{searchParams.categoryName}}<i @click="removeCat">×</i>
+            </li>
+            <li class="with-x" v-if="searchParams.keyword">
+            {{searchParams.keyword}}<i @click="removeKey">×</i>
+            </li>
+            <li class="with-x" v-if="searchParams.trademark">
+            {{searchParams.trademark.split(':')[1]}}<i @click="removeTrademake">×</i>
+            </li>
           </ul>
         </div>
 
         <!--selector-->
-        <SearchSelector />
+        <SearchSelector @trademarkInfo="trademarkInfo" />
 
         <!--details-->
         <div class="details clearfix">
@@ -149,15 +154,43 @@ export default {
   methods: {
     getData() {
       this.$store.dispatch('getSearchList', this.searchParams)
+    },
+    removeCat() {
+      this.searchParams.categoryName = undefined
+      this.searchParams.category1Id = undefined
+      this.searchParams.category2Id = undefined
+      this.searchParams.category3Id = undefined
+      this.getData()
+      this.$router.push({
+        name: 'search',
+        params: this.$route.params
+      })
+    }, 
+    removeKey() {
+      this.searchParams.keyword = undefined
+      this.getData()
+      this.$router.push({
+        name: 'search',
+        query: this.$route.query
+      })
+      this.$bus.$emit('clearKey')
+    },
+    trademarkInfo(trademark) {
+      this.searchParams.trademark = `${trademark.tmId}:${trademark.tmName}`
+      this.getData()
+    },
+    removeTrademake() {
+      this.searchParams.trademark = undefined
+      this.getData()
     }
   },
   watch: {
     $route(newVal, oldVal) {
       Object.assign(this.searchParams, newVal.query, newVal.params)
       this.getData()
-      this.searchParams.category1Id = ''
-      this.searchParams.category2Id = ''
-      this.searchParams.category3Id = ''
+      this.searchParams.category1Id = undefined
+      this.searchParams.category2Id = undefined
+      this.searchParams.category3Id = undefined
     }
   }
 }

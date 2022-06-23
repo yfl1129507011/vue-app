@@ -26,6 +26,9 @@ Vue.config.productionTip = false
 
 new Vue({
   render: h => h(App),
+  beforeCreate() {  // 配置全局事件总线
+    Vue.prototype.$bus = this
+  },
   // 注册路由
   router,
   store
