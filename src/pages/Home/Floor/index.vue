@@ -22,19 +22,18 @@
                             <img :src="data.imgUrl" />
                         </div>
                         <div class="floorBanner">
-                            <div class="swiper-container" id="floor1Swiper">
+                            <Carousel :carouselList="data.carouselList" />
+                            <!-- 通过Carousel全局组件优化 -->
+                            <!-- <div class="swiper-container" id="floor1Swiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide" v-for="carousel in data.carouselList" :key="carousel.id">
                                         <img :src="carousel.imgUrl">
                                     </div>
                                 </div>
-                                <!-- 如果需要分页器 -->
                                 <div class="swiper-pagination"></div>
-
-                                <!-- 如果需要导航按钮 -->
                                 <div class="swiper-button-prev"></div>
                                 <div class="swiper-button-next"></div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="split">
                             <span class="floor-x-line"></span>
@@ -65,13 +64,14 @@
 </template>
 
 <script>
-import Swiper from 'swiper'
+// import Swiper from 'swiper'  // 通过Carousel全局组件优化
 
 export default {
     name: "Floor",
-    props: ['data'],
+    props: ["data"],
     mounted() {
-        // 通过了父组件请求的数据，可以直接在mounted里执行Swiper
+        // 通过Carousel全局组件优化
+        /* // 通过了父组件请求的数据，可以直接在mounted里执行Swiper
         new Swiper('#floor1Swiper', {
             loop: true, // 循环模式选项
 
@@ -86,7 +86,7 @@ export default {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
             }
-        })
+        }) */
     }
 }
 </script>

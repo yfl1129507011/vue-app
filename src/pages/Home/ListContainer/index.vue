@@ -3,20 +3,19 @@
     <div class="list-container">
         <div class="sortList clearfix">
             <div class="center">
-                <!--banner轮播-->
-                <div class="swiper-container" id="mySwiper">
+                <!--banner轮播 通过Carousel全局组件优化-->
+                <Carousel :carouselList="bannerList" />
+                <!-- <div class="swiper-container" id="mySwiper">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide" v-for="(carousel, index) in bannerList" :key="index">
                             <img :src="carousel.imgUrl" />
                         </div>
                     </div>
-                    <!-- 如果需要分页器 -->
                     <div class="swiper-pagination"></div>
 
-                    <!-- 如果需要导航按钮 -->
                     <div class="swiper-button-prev"></div>
                     <div class="swiper-button-next"></div>
-                </div>
+                </div> -->
             </div>
             <div class="right">
                 <div class="news">
@@ -103,7 +102,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import Swiper from 'swiper'
+// import Swiper from 'swiper'  // 通过Carousel全局组件优化
 
 export default {
     name: "ListContainer",
@@ -115,7 +114,9 @@ export default {
             bannerList: state => state.home.bannerList
         })
     },
-    watch: {
+    // 通过Carousel全局组件优化
+    // #region
+    /* watch: {
         bannerList: {
             handler(newVal, oldVal) {
                 this.$nextTick(()=>{
@@ -137,7 +138,8 @@ export default {
                 })
             }
         }
-    }
+    } */
+    // #endregion
 }
 </script>
 

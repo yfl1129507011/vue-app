@@ -99,11 +99,11 @@ export default {
                 let query = { categoryName: categoryname }
 
                 if (catid1) { // 一级分类
-                    query.catId1 = catid1
+                    query.category1Id = catid1
                 } else if (catid2) { // 二级分类
-                    query.catId2 = catid2
+                    query.category2Id = catid2
                 } else {
-                    query.catId3 = catid3
+                    query.category3Id = catid3
                 }
 
                 location.query = query

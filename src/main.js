@@ -4,7 +4,11 @@ import App from './App.vue'
 // 三级联动组件---注册为全局组件
 import TypeNav from '@/components/TypeNav'
 
+// 轮播图组件--注册为全局组件
+import Carousel from '@/components/Carousel'
+
 Vue.component(TypeNav.name, TypeNav)
+Vue.component(Carousel.name, Carousel)
 
 // 引入路由
 import router from '@/router'
