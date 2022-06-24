@@ -7,8 +7,12 @@ import TypeNav from '@/components/TypeNav'
 // 轮播图组件--注册为全局组件
 import Carousel from '@/components/Carousel'
 
+// 分页组件--注册为全局组件
+import Pagination from '@/components/Pagination'
+
 Vue.component(TypeNav.name, TypeNav)
 Vue.component(Carousel.name, Carousel)
+Vue.component(Pagination.name, Pagination)
 
 // 引入路由
 import router from '@/router'
