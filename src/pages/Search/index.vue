@@ -12,16 +12,16 @@
           </ul>
           <ul class="fl sui-tag">
             <li class="with-x" v-if="searchParams.categoryName">
-            {{searchParams.categoryName}}<i @click="removeCat">×</i>
+              {{ searchParams.categoryName }}<i @click="removeCat">×</i>
             </li>
             <li class="with-x" v-if="searchParams.keyword">
-            {{searchParams.keyword}}<i @click="removeKey">×</i>
+              {{ searchParams.keyword }}<i @click="removeKey">×</i>
             </li>
             <li class="with-x" v-if="searchParams.trademark">
-            {{searchParams.trademark.split(':')[1]}}<i @click="removeTrademake">×</i>
+              {{ searchParams.trademark.split(':')[1] }}<i @click="removeTrademake">×</i>
             </li>
             <li class="with-x" v-for="(attr, inx) in searchParams.props" :key="inx">
-            {{attr.split(':')[1]}}<i @click="removeAttr(inx)">×</i>
+              {{ attr.split(':')[1] }}<i @click="removeAttr(inx)">×</i>
             </li>
           </ul>
         </div>
@@ -34,23 +34,19 @@
           <div class="sui-navbar">
             <div class="navbar-inner filter">
               <ul class="sui-nav">
-                <li class="active">
-                  <a href="#">综合</a>
+                <li :class="{ active: orderOne }" @click="orderChange('1')">
+                  <a>
+                    综合
+                    <span v-if="orderOne && orderAsc">⬆</span>
+                    <span v-if="orderOne && orderDesc">⬇</span>
+                  </a>
                 </li>
-                <li>
-                  <a href="#">销量</a>
-                </li>
-                <li>
-                  <a href="#">新品</a>
-                </li>
-                <li>
-                  <a href="#">评价</a>
-                </li>
-                <li>
-                  <a href="#">价格⬆</a>
-                </li>
-                <li>
-                  <a href="#">价格⬇</a>
+                <li :class="{ active: orderTwo }" @click="orderChange('2')">
+                  <a>
+                    价格
+                    <span v-if="orderTwo && orderAsc">⬆</span>
+                    <span v-if="orderTwo && orderDesc">⬇</span>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -65,12 +61,12 @@
                   <div class="price">
                     <strong>
                       <em>¥</em>
-                      <i>{{goods.price}}.00</i>
+                      <i>{{ goods.price }}.00</i>
                     </strong>
                   </div>
                   <div class="attr">
                     <a target="_blank" href="item.html" :title="goods.title">
-                      {{goods.title}}
+                      {{ goods.title }}
                     </a>
                   </div>
                   <div class="commit">
@@ -136,7 +132,7 @@ export default {
         category3Id: '',
         categoryName: '',
         keyword: '',
-        order: '',
+        order: '1:desc',
         pageNo: 1,
         pageSize: 10,
         props: [],
@@ -152,7 +148,19 @@ export default {
   },
   computed: {
     // getters计算是没有划分模块
-    ...mapGetters(['goodsList'])
+    ...mapGetters(['goodsList']),
+    orderOne() {
+      return this.searchParams.order.indexOf('1') != -1
+    },
+    orderTwo() {
+      return this.searchParams.order.indexOf('2') != -1
+    },
+    orderDesc() {
+      return this.searchParams.order.indexOf('desc') != -1
+    },
+    orderAsc() {
+      return this.searchParams.order.indexOf('asc') != -1
+    }
   },
   methods: {
     getData() {
@@ -168,7 +176,7 @@ export default {
         name: 'search',
         params: this.$route.params
       })
-    }, 
+    },
     removeKey() {
       this.searchParams.keyword = undefined
       this.getData()
@@ -195,6 +203,21 @@ export default {
     },
     removeAttr(inx) {
       this.searchParams.props.splice(inx, 1)
+      this.getData()
+    },
+
+    orderChange(flag) {
+      let originOrder = this.searchParams.order
+      let originFlag = originOrder.split(':')[0]
+      let originSort = originOrder.split(':')[1]
+
+      let newOrder = ''
+      if (flag == originFlag) {
+        newOrder = `${originFlag}:${originSort == 'desc' ? 'asc' : 'desc'}`
+      } else {
+        newOrder = `${flag}:desc`
+      }
+      this.searchParams.order = newOrder
       this.getData()
     }
   },
