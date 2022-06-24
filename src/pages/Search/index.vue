@@ -20,11 +20,14 @@
             <li class="with-x" v-if="searchParams.trademark">
             {{searchParams.trademark.split(':')[1]}}<i @click="removeTrademake">×</i>
             </li>
+            <li class="with-x" v-for="(attr, inx) in searchParams.props" :key="inx">
+            {{attr.split(':')[1]}}<i @click="removeAttr(inx)">×</i>
+            </li>
           </ul>
         </div>
 
         <!--selector-->
-        <SearchSelector @trademarkInfo="trademarkInfo" />
+        <SearchSelector @trademarkInfo="trademarkInfo" @attrInfo="attrInfo" />
 
         <!--details-->
         <div class="details clearfix">
@@ -181,6 +184,17 @@ export default {
     },
     removeTrademake() {
       this.searchParams.trademark = undefined
+      this.getData()
+    },
+    attrInfo(attr, attrVal) {
+      let props = `${attr.attrId}:${attrVal}:${attr.attrName}`
+      if (this.searchParams.props.indexOf(props) == -1) {
+        this.searchParams.props.push(props)
+        this.getData()
+      }
+    },
+    removeAttr(inx) {
+      this.searchParams.props.splice(inx, 1)
       this.getData()
     }
   },
