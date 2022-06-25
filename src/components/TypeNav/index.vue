@@ -11,24 +11,24 @@
                             <div :class="{ cur: curInx == inx }" class="item" v-for="(c1, inx) in categoryList"
                                 :key="c1.categoryId">
                                 <h3 @mouseenter="changeInx(inx)">
-                                    <a :data-catId1="c1.categoryId" :data-categoryName="c1.categoryName">{{
-                                            c1.categoryName
-                                    }}</a>
+                                    <a :data-catId1="c1.categoryId" :data-categoryName="c1.categoryName">
+                                        {{c1.categoryName}}
+                                    </a>
                                 </h3>
                                 <div class="item-list clearfix" :style="{ display: curInx == inx ? 'block' : 'none' }">
                                     <div class="subitem" v-for="c2 in c1.categoryChild" :key="c2.categoryId">
                                         <dl class="fore">
                                             <dt>
-                                                <a :data-catId2="c2.categoryId" :data-categoryName="c2.categoryName">{{
-                                                        c2.categoryName
-                                                }}</a>
+                                                <a :data-catId2="c2.categoryId" :data-categoryName="c2.categoryName">
+                                                    {{c2.categoryName}}
+                                                </a>
                                             </dt>
                                             <dd>
                                                 <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
                                                     <a :data-catId3="c3.categoryId"
-                                                        :data-categoryName="c3.categoryName">{{
-                                                                c3.categoryName
-                                                        }}</a>
+                                                        :data-categoryName="c3.categoryName">
+                                                            {{c3.categoryName}}
+                                                        </a>
                                                 </em>
                                             </dd>
                                         </dl>
@@ -89,6 +89,7 @@ export default {
             }
         },
         goSearch(event) {
+            this.show = false
             let element = event.target
             let { categoryname, catid1, catid2, catid3 } = element.dataset
             // console.log(element.dataset)

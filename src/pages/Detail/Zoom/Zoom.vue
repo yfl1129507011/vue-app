@@ -1,18 +1,46 @@
 <template>
   <div class="spec-preview">
-    <img :src="skuImageList[0] && skuImageList[0].imgUrl" />
-    <div class="event"></div>
+    <img :src="skuImageList[currInx] && skuImageList[currInx].imgUrl" />
+    <div class="event" @mousemove="handler"></div>
     <div class="big">
-      <img :src="skuImageList[0] && skuImageList[0].imgUrl" />
+      <img ref="big" :src="skuImageList[currInx] && skuImageList[currInx].imgUrl" />
     </div>
-    <div class="mask"></div>
+    <div class="mask" ref="mask"></div>
   </div>
 </template>
 
 <script>
   export default {
     name: "Zoom",
-    props: ['skuImageList']
+    data() {
+      return {
+        currInx: 0
+      }
+    },
+    props: ['skuImageList'],
+    mounted() {
+      this.$bus.$on('getInx', (inx)=>{
+        this.currInx = inx
+      })
+    },
+    methods: {
+      handler(event) {
+        let mask = this.$refs.mask
+        let big = this.$refs.big
+        let left = event.offsetX - mask.offsetWidth/2
+        let top = event.offsetY - mask.offsetHeight/2
+
+        if (left < 0) left = 0
+        if (left > mask.offsetWidth) left = mask.offsetWidth
+        if (top < 0) top = 0
+        if (top > mask.offsetHeight) top = mask.offsetHeight
+        mask.style.left = left + 'px'
+        mask.style.top = top + 'px'
+
+        big.style.left = -2 * left + 'px'
+        big.style.top = -2 * top + 'px'
+      }
+    }
   }
 </script>
 

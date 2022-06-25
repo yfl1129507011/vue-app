@@ -1,8 +1,8 @@
 <template>
-  <div class="swiper-container">
+  <div class="swiper-container" id="carouselSwiper">
     <div class="swiper-wrapper">
-      <div class="swiper-slide" v-for="slide in skuImageList" :key="slide.id">
-        <img :src="slide.imgUrl">
+      <div class="swiper-slide" v-for="(slide,inx) in skuImageList" :key="slide.id">
+        <img @click="changeInx(inx)" :src="slide.imgUrl" :class="{active: currInx==inx}">
       </div>
     </div>
     <div class="swiper-button-next"></div>
@@ -16,7 +16,45 @@ import Swiper from 'swiper'
 
 export default {
   name: "ImageList",
-  props: ['skuImageList']
+  props: ['skuImageList'],
+  data() {
+    return {
+      currInx: 0
+    }
+  },
+  methods: {
+    changeInx(inx) {
+      this.currInx = inx
+      this.$bus.$emit('getInx', inx)
+    }
+  },
+  watch: {
+    skuImageList(newVal, oldVal) {
+      this.$nextTick(() => { 
+        new Swiper('#carouselSwiper', {
+          loop: true, // 循环模式选项
+
+          // 如果需要分页器
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true
+          },
+
+          // 如果需要前进后退按钮
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+
+          // 设置显示几个图片
+          slidesPerView: 4,
+
+          // 设置每次切换图片的个数
+          slidesPerGroup: 1
+        })
+      })
+    }
+  }
 }
 </script>
 
