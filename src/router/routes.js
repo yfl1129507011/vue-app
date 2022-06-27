@@ -4,8 +4,29 @@ import Search from '@/pages/Search'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 import Detail from '@/pages/Detail'
+import AddCartSuccess from '@/pages/AddCartSuccess'
+import ShopCart from '@/pages/ShopCart'
+
 
 export default [
+    {
+        name: 'shopcart',
+        path: "/shopcart",
+        component: ShopCart,
+        // 加入路由元信息
+        meta: {
+            show: true
+        }
+    },
+    {
+        name: 'addcart',
+        path: "/addcart",
+        component: AddCartSuccess,
+        // 加入路由元信息
+        meta: {
+            show: true
+        }
+    },
     {
         name: 'detail',
         path: "/detail/:skuid",

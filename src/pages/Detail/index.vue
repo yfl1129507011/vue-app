@@ -73,12 +73,12 @@
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt">
-                <a href="javascript:" class="plus">+</a>
-                <a href="javascript:" class="mins">-</a>
+                <input autocomplete="off" class="itxt" v-model="skuNum" @change="changeSkuNum">
+                <a href="javascript:" class="plus" @click="skuNum++">+</a>
+                <a href="javascript:" class="mins" @click="skuNum-1 && skuNum--">-</a>
               </div>
               <div class="add">
-                <a href="javascript:">加入购物车</a>
+                <a @click="addShopCart">加入购物车</a>
               </div>
             </div>
           </div>
@@ -336,7 +336,11 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'Detail',
-
+  data() {
+    return {
+      skuNum: 1,  // 购买产品的数量 
+    }
+  },
   components: {
     ImageList,
     Zoom
@@ -353,6 +357,29 @@ export default {
         item.isChecked = 0
       })
       saleAttrVal.isChecked = 1
+    },
+    changeSkuNum(event) {
+      let val = event.target.value * 1
+      if (isNaN(val) || val < 1) {
+        this.skuNum = 1
+      } else {
+        this.skuNum = parseInt(val)
+      }
+    },
+    async addShopCart() {
+      try {
+        await this.$store.dispatch('addOrUpdateShopCart', {skuId: this.$route.params.skuid, skuNum:this.skuNum})
+        sessionStorage.setItem('SKU_INFO',JSON.stringify(this.skuInfo))
+        this.$router.push({
+          name: 'addcart',
+          query: {
+            // skuInfo: this.skuInfo,
+            skuNum: this.skuNum
+          }
+        })
+      } catch (error) {
+        
+      }
     }
   }
 }
