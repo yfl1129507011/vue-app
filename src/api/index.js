@@ -50,3 +50,35 @@ export const reqUpdateChecked = (skuId, isChecked) => requests({
     url: `/cart/checkCart/${skuId}/${isChecked}`,
     method: 'get'
 })
+
+// 获取验证码接口
+export const reqGetCode = (phone) => requests({
+    url: `/user/passport/sendCode/${phone}`,
+    method: 'get'
+})
+
+// 用户注册接口
+export const reqUserRegister = (userInfo) => requests({
+    url: `/user/passport/register`,
+    data: userInfo,
+    method: 'post'
+})
+
+// 用户登录接口
+export const reqUserLogin = (userInfo) => requests({
+    url: `/user/passport/login`,
+    data: userInfo,
+    method: 'post'
+})
+
+// 获取用户登录信息接口
+export const reqUserInfo = () => requests({
+    url: `/user/passport/auth/getUserInfo`,
+    method: 'get'
+})
+
+// 用户退出接口
+export const reqUserLogout = () => requests({
+    url: `/user/passport/logout`,
+    method: 'get'
+})

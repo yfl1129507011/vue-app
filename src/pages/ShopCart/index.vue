@@ -96,7 +96,7 @@ export default {
           }
           break
       }
-      console.log('disNum:' + disNum)
+      // console.log('disNum:' + disNum)
       if (disNum != 0) {
         try {
           await this.$store.dispatch('addOrUpdateShopCart', {

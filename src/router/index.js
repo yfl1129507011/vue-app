@@ -2,6 +2,8 @@
 import Vue from "vue"
 import VueRouter from "vue-router"
 
+import { getToken } from '@/utils/token'
+
 // 使用插件
 Vue.use(VueRouter)
 
@@ -29,7 +31,7 @@ VueRouter.prototype.replace = function (location, resolve, reject) {
 }
 
 // 配置路由
-export default new VueRouter({
+let router = new VueRouter({
     routes,
 
     // 滚动行为
@@ -37,3 +39,14 @@ export default new VueRouter({
         return { y: 0 }
     }
 })
+
+// 全局前置守卫
+router.beforeEach((to, from, next) => {
+    if (getToken() && to.path == '/login') {
+        next('/home')
+    } else {
+        next()
+    }
+})
+
+export default router
