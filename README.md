@@ -183,3 +183,37 @@ watch: {
 4. pubsub-js：消息订阅  全部组件都能通信
 5. 插槽
 6. vuex
+
+
+## 按需引入element-ui组件
+> 安装：npm i element-ui babel-plugin-component
+
+1. babel.config.js文件内容如下：
+    ```js
+    module.exports = {
+    presets: [
+        '@vue/cli-plugin-babel/preset',
+        ["@babel/preset-env", { "modules": false }],
+    ],
+    plugins: [
+        [
+        "component",
+        {
+            "libraryName": "element-ui",
+            "styleLibraryName": "theme-chalk"
+        }
+        ]
+    ]
+    }
+
+    ```
+2. main.js入口文件中进行引入
+    ```js
+    // element-ui组件
+    import { Button, MessageBox } from 'element-ui'
+
+    // 注册element组件
+    Vue.component(Button.name, Button)
+    Vue.prototype.$msgbox = MessageBox
+    Vue.prototype.$alert = MessageBox.alert
+    ```

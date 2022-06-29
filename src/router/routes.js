@@ -6,9 +6,39 @@ import Register from '@/pages/Register'
 import Detail from '@/pages/Detail'
 import AddCartSuccess from '@/pages/AddCartSuccess'
 import ShopCart from '@/pages/ShopCart'
+import Trade from '@/pages/Trade'
+import Pay from '@/pages/Pay'
+import PaySuccess from '@/pages/PaySuccess'
 
 
 export default [
+    {
+        name: 'paysuccess',
+        path: "/paysuccess",
+        component: PaySuccess,
+        // 加入路由元信息
+        meta: {
+            show: true
+        }
+    },
+    {
+        name: 'pay',
+        path: "/pay",
+        component: Pay,
+        // 加入路由元信息
+        meta: {
+            show: true
+        }
+    },
+    {
+        name: 'trade',
+        path: "/trade",
+        component: Trade,
+        // 加入路由元信息
+        meta: {
+            show: true
+        }
+    },
     {
         name: 'shopcart',
         path: "/shopcart",
