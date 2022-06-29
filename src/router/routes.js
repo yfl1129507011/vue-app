@@ -9,9 +9,36 @@ import ShopCart from '@/pages/ShopCart'
 import Trade from '@/pages/Trade'
 import Pay from '@/pages/Pay'
 import PaySuccess from '@/pages/PaySuccess'
+import Center from '@/pages/Center'
+
+import User from '@/pages/Center/User'
+import Group from '@/pages/Center/Group'
 
 
 export default [
+    {
+        name: 'center',
+        path: "/center",
+        component: Center,
+        // 加入路由元信息
+        meta: {
+            show: true
+        },
+        children: [
+            {
+                path: 'user',
+                component: User
+            },
+            {
+                path: 'group',
+                component: Group
+            },
+            {
+                path: '/center',
+                redirect: '/center/user'
+            }
+        ]
+    },
     {
         name: 'paysuccess',
         path: "/paysuccess",
