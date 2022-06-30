@@ -75,13 +75,13 @@ export default {
   name: 'Login',
   data() {
     return {
-      phone: '1370000000',   // 1370000000
+      phone: '18612331650',   // 18612331650
       password: '111111'  // 111111
     }
   },
   methods: {
     async userLogin() {
-      const success = this.$validator.validateAll()
+      const success = await this.$validator.validateAll()
       if (success) {
         try {
           const { phone, password } = this
