@@ -340,3 +340,18 @@ watch: {
     // vue.config.js 文件中配置
     productionSourceMap: false
     ```
+
+- 打包后将生成的dist文件夹上传到服务器指定位置
+
+- nginx配置如下：
+    ```config
+    listen 80;
+    server_name Vue.app.com ;
+    index index.html index.htm index.php;
+    root  /home/wwwroot/dist;
+
+    location /api {
+        proxy_pass http://gmall-h5-api.atguigu.cn;
+    }
+
+    ```
