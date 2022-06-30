@@ -37,6 +37,15 @@ import 'swiper/css/swiper.css'
 // 引入api接口
 import * as API from '@/api'
 
+// 引入懒加载插件
+// import VueLazyload from 'vue-lazyload'
+import Vant from 'vant'
+import { Lazyload } from 'vant'
+import 'vant/lib/index.css'
+// 注册插件
+Vue.use(Vant)
+Vue.use(Lazyload)
+
 Vue.config.productionTip = false
 
 new Vue({

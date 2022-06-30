@@ -217,3 +217,28 @@ watch: {
     Vue.prototype.$msgbox = MessageBox
     Vue.prototype.$alert = MessageBox.alert
     ```
+
+
+## 图片懒加载
+> npm i vue-lazyload vant
+
+1. main.js入口文件中进行引入
+    ```js
+    // 引入懒加载插件
+    // import VueLazyload from 'vue-lazyload'
+    import Vant from 'vant'
+    import { Lazyload } from 'vant'
+    import 'vant/lib/index.css'
+    // 注册插件
+    Vue.use(Vant)
+    Vue.use(Lazyload)
+    ```
+
+2. 在组件中应用
+    ```vue
+    <ul>
+        <li v-for="img in list">
+            <img v-lazy="img.src" >
+        </li>
+    </ul>
+    ```
