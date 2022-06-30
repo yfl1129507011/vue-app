@@ -55,6 +55,15 @@ export default [
         // 加入路由元信息
         meta: {
             show: true
+        },
+
+        // 路由独享守卫
+        beforeEnter: (to, from, next) => {
+            if (from.path == '/trade') {
+                next()
+            } else {
+                next(false)
+            }
         }
     },
     {
@@ -64,6 +73,15 @@ export default [
         // 加入路由元信息
         meta: {
             show: true
+        },
+
+        // 路由独享守卫
+        beforeEnter: (to, from, next) => {
+            if (from.path == '/shopcart') {
+                next()
+            } else {
+                next(false)
+            }
         }
     },
     {
