@@ -34,8 +34,8 @@
                             <td width="60%">
                                 <div class="typographic">
                                     <img :src="cart.imgUrl" style="height:50px;width:50px">
-                                    <a href="#" class="block-text">{{ cart.skuName }}}</a>
-                                    <span>x{{ cart.skuNum }}}</span>
+                                    <a href="#" class="block-text">{{ cart.skuName }}</a>
+                                    <span>x{{ cart.skuNum }}</span>
                                     <a href="#" class="service">售后申请</a>
                                 </div>
                             </td>
@@ -142,7 +142,7 @@ export default {
         }
     },
     mounted() {
-
+        this.getData()
     },
     methods: {
         async getData() {

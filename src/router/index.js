@@ -45,7 +45,16 @@ router.beforeEach((to, from, next) => {
     if (getToken() && to.path == '/login') {
         next('/home')
     } else {
-        next()
+        if (getToken()) {
+            next()
+        } else {
+            let mustLoginUrl = ['/trade', '/pay', '/center/user']
+            if (mustLoginUrl.indexOf(to.path) != -1) {
+                next('/login?redirect=' + to.path)
+            } else {
+                next()
+            }
+        }
     }
 })
 

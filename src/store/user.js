@@ -62,6 +62,8 @@ const actions = {
         let result = await reqUserInfo()
         if (result.code == 200) {
             commit('USER_INFO', result.data)
+        } else {
+            commit('USER_LOGOUT')
         }
     },
 
