@@ -242,3 +242,90 @@ watch: {
         </li>
     </ul>
     ```
+
+## vee-validate表单验证
+> npm i vee-validate
+
+1. main.js入口文件中进行引入
+    ```js
+    // 引入表单验证插件
+    import VeeValidate from 'vee-validate'
+    import zh_CN from 'vee-validate/dist/locale/zh_CN'
+    Vue.use(VeeValidate)
+
+    // 表单验证
+    VeeValidate.Validator.localize('zh_CN', {
+    messages: {
+        ...zh_CN.messages,
+        is: (field) => `${field}必须与密码相同`
+    },
+    attributes: {
+        phone: '手机号',
+        code: '验证码',
+        password: '密码',
+        password1: '确认密码',
+        isCheck: '协议',
+    }
+    })
+
+    // 自定义规则
+    VeeValidate.Validator.extend('agree', {
+    validate: value => {
+        return value
+    },
+    getMessage: field => field + '必须同意'
+    })
+    ```
+
+2. 在组件中应用
+    ```vue
+    <div class="content">
+        <label>手机号:</label>
+        <input v-model="userInfo.phone" name="phone" v-validate="{ required: true, regex: /^1\d{10}$/ }"
+            :class="{ invalid: errors.has('phone') }" type="text" placeholder="请输入你的手机号">
+        <span class="error-msg">{{ errors.first('phone') }}</span>
+    </div>
+    <div class="content">
+        <label>验证码:</label>
+        <input v-model="userInfo.code" name="code" v-validate="{ required: true, regex: /^\d{6}$/ }"
+            :class="{ invalid: errors.has('code') }" type="text" placeholder="请输入验证码">
+        <button @click="getCode" style="height:38px;width:100px">获取验证码</button>
+        <span class="error-msg">{{ errors.first('code') }}</span>
+    </div>
+    <div class="content">
+        <label>登录密码:</label>
+        <input v-model="userInfo.password" name="password"
+            v-validate="{ required: true, regex: /^[0-9A-Za-z]{6,20}$/ }" :class="{ invalid: errors.has('password') }"
+            type="password" placeholder="请输入你的登录密码">
+        <span class="error-msg">{{ errors.first('password') }}</span>
+    </div>
+    <div class="content">
+        <label>确认密码:</label>
+        <input v-model="userInfo.rePassword" name="password1" v-validate="{ required: true, is: userInfo.password}"
+            :class="{ invalid: errors.has('password1') }" type="password" placeholder="请输入确认密码">
+        <span class="error-msg">{{ errors.first('password1') }}</span>
+    </div>
+    <div class="controls">
+        <input name="isCheck" v-validate="{ required: true, 'agree': true }" :class="{ invalid: errors.has('isCheck') }"
+            type="checkbox" :checked="userInfo.agree">
+        <span>同意协议并注册《尚品汇用户协议》</span>
+        <span class="error-msg">{{ errors.first('isCheck') }}</span>
+    </div>
+    <div class="btn">
+        <button @click="register">完成注册</button>
+    </div>
+
+    <script>
+        async register() {
+            const success = await this.$validator.validateAll()  // 验证全部规则
+            if (success) {
+                try {
+                await this.$store.dispatch('userRegister', this.userInfo)
+                this.$router.push('/login')
+                } catch (error) {
+                console.log(error.message)
+                }
+            }
+        }
+    </script>
+    ```

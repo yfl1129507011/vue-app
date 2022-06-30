@@ -15,13 +15,18 @@
 
           <div class="content">
             <form action="##">
+              <div class="input-text clearFix" style="color:red">
+                {{ errors.first('phone') ||  errors.first('password')}}
+              </div>
               <div class="input-text clearFix">
                 <span></span>
-                <input v-model="phone" type="text" placeholder="邮箱/用户名/手机号">
+                <input name="phone" v-validate="{ required: true, regex: /^1\d{10}$/ }"
+                  :class="{ invalid: errors.has('phone') }" v-model="phone" type="text" placeholder="邮箱/用户名/手机号">
               </div>
               <div class="input-text clearFix">
                 <span class="pwd"></span>
-                <input v-model="password" type="password" placeholder="请输入密码">
+                <input name="password" v-validate="{ required: true, regex: /^\d{6}$/ }"
+                  :class="{ invalid: errors.has('password') }" v-model="password" type="password" placeholder="请输入密码">
               </div>
               <div class="setting clearFix">
                 <label class="checkbox inline">
@@ -76,15 +81,18 @@ export default {
   },
   methods: {
     async userLogin() {
-      try {
-        const {phone, password} = this
-        phone && password && await this.$store.dispatch('userLogin', {phone, password})
-        
-        let toPath = this.$route.query.redirect || '/home'
-        console.log(toPath)
-        this.$router.push(toPath)
-      } catch (error) {
-        
+      const success = this.$validator.validateAll()
+      if (success) {
+        try {
+          const { phone, password } = this
+          phone && password && await this.$store.dispatch('userLogin', { phone, password })
+
+          let toPath = this.$route.query.redirect || '/home'
+          console.log(toPath)
+          this.$router.push(toPath)
+        } catch (error) {
+
+        }
       }
     }
   }
