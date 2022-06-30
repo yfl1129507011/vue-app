@@ -1,5 +1,5 @@
 // 引入路由组件
-import Home from '@/pages/Home'
+// import Home from '@/pages/Home'
 import Search from '@/pages/Search'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
@@ -113,7 +113,10 @@ export default [
     },
     {
         path: "/home",
-        component: Home,
+        // component: Home,
+        component: () => {  // 路由懒加载，只有访问/home路由时，才会加载Home组件
+            return import('@/pages/Home')
+        },
         // 加入路由元信息
         meta: {
             show: true
