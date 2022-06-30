@@ -12,5 +12,8 @@ module.exports = {
                 } */
             }
         }
-    }
+    },
+
+    // 打包项目时取消map文件输出
+    productionSourceMap: false
 }

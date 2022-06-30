@@ -329,3 +329,14 @@ watch: {
         }
     </script>
     ```
+
+## 项目上线打包
+
+- npm run build
+
+- 项目打包后，代码都是经过压缩加密的，但map文件不是
+- 配置map文件是否输出
+    ```js
+    // vue.config.js 文件中配置
+    productionSourceMap: false
+    ```
