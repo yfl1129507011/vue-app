@@ -4,6 +4,8 @@ import VueRouter from "vue-router"
 
 import { getToken } from '@/utils/token'
 
+import store from "@/store"
+
 // 使用插件
 Vue.use(VueRouter)
 
@@ -41,12 +43,22 @@ let router = new VueRouter({
 })
 
 // 全局前置守卫
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
     if (getToken() && to.path == '/login') {
         next('/home')
     } else {
         if (getToken()) {
-            next()
+            if (store.state.user.userInfo.name) {
+                next()
+            } else {
+                try {
+                    await store.dispatch('userInfo')
+                    next()
+                } catch (error) {
+                    await store.dispatch('userLogout')
+                    next('/login')
+                }
+            }
         } else {
             let mustLoginUrl = ['/trade', '/pay', '/center/user']
             if (mustLoginUrl.indexOf(to.path) != -1) {
