@@ -88,7 +88,6 @@ export default {
           phone && password && await this.$store.dispatch('userLogin', { phone, password })
 
           let toPath = this.$route.query.redirect || '/home'
-          console.log(toPath)
           this.$router.push(toPath)
         } catch (error) {
 

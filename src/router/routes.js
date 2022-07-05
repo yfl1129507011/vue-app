@@ -62,7 +62,11 @@ export default [
             if (from.path == '/trade') {
                 next()
             } else {
-                next(false)
+                if (from.path == '/login') {
+                    next('/shopcart')
+                } else {
+                    next(false)
+                }
             }
         }
     },
@@ -80,7 +84,11 @@ export default [
             if (from.path == '/shopcart') {
                 next()
             } else {
-                next(false)
+                if (from.path == '/login') {
+                    next('/shopcart')
+                } else {
+                    next(false)
+                }
             }
         }
     },
